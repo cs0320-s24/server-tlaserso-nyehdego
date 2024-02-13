@@ -7,9 +7,22 @@ import edu.brown.cs.student.main.builtins.loadHandler;
 import spark.Spark;
 
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import static spark.Spark.after;
 
 public class Server {
+
+    private static ArrayList<ArrayList<String>> data;
+
+    public static ArrayList<ArrayList<String>> getCSVData() {
+        return data;
+    }
+
+    public static void setCSVData(ArrayList<ArrayList<String>> csvData) {
+        Server.data = csvData;
+    }
     public static void main(String[] args) {
         int port = 3232;
         Spark.port(port);

@@ -4,6 +4,7 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import edu.brown.cs.student.main.CSVParser.CSVParser;
 import edu.brown.cs.student.main.CSVSearcher.StringArrayListFromRowCreator;
+import edu.brown.cs.student.main.Server;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -22,15 +23,29 @@ public class loadHandler implements Route {
         System.out.println(params);
         String path = "data/";
         path += request.queryParams("path");
+
+        // should we error check that the path is null?
         Map<String, Object> responseMap = new HashMap<>();
         try{
             CSVParser<ArrayList<String>> parser = new CSVParser<ArrayList<String>>(new FileReader(path),new StringArrayListFromRowCreator());
             ArrayList<ArrayList<String>> output = parser.parse();
-        }catch (FileNotFoundException e){
+
+            Map<String, Object> loadResponseMap = new HashMap<>();
+
+            // to "cache" the data, we could make a field in the Server class
+
+            Server.setCSVData(output);
+
+            //added this response map and putting the output as the value
+            responseMap.put("data", output);
+            return new LoadSuccessResponse(loadResponseMap).serialize();
+        } catch (FileNotFoundException e){
             System.err.println("File not found");
+            return new LoadFailureResponse("File not found error");
         }catch(IOException I){
             System.err.println(
                     "error occurred while parsing CSV file.  Please see previous error message for more details");
+            return new LoadFailureResponse("Parsing error");
         }
 
     }
