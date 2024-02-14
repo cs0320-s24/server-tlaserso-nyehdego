@@ -12,7 +12,7 @@ public class BroadbandHandler implements Route {
     public Object handle(Request request, Response response){
         Set<String> params = request.queryParams();
         System.out.println(params);
-
+        return request;
     }
 
 }

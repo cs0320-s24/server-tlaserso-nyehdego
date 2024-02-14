@@ -13,6 +13,8 @@ import java.util.LinkedList;
 public class Searcher {
   private ArrayList<ArrayList<String>> DataSet;
 
+  private ArrayList<ArrayList<String>> searchResult;
+
   /*
   This is the constructor for searcher.  It takes in a String filename and sets the dataset instance variable as
   the result of parsing.
@@ -49,7 +51,7 @@ public class Searcher {
   the first row is searched to determine which column index has that header, and then the entries in that column are searched
   through.  This method prints the rows found in, a summary, and returns as an int the number of times the term was found.
    */
-  public int search(String toFind, Boolean hasHeaders, String columnID, Boolean IDisInt) {
+  public ArrayList<ArrayList<String>> search(String toFind, Boolean hasHeaders, String columnID, Boolean IDisInt) {
     int tracker = 0;
     int rowFoundIn;
     LinkedList<Integer> rowsIn = new LinkedList();
@@ -58,7 +60,8 @@ public class Searcher {
         ArrayList<String> rowSet = this.DataSet.get(i);
         for (int j = 0; j < rowSet.size(); j++) {
           if (rowSet.get(j).toUpperCase().contains(toFind.toUpperCase())) {
-            System.out.println(rowSet);
+//            System.out.println(rowSet);
+            searchResult.add(rowSet);
             rowFoundIn = i++;
             rowsIn.add(rowFoundIn);
             tracker++;
@@ -105,7 +108,8 @@ public class Searcher {
           break;
         }
         if (rowSet.get(columnToSearch).toUpperCase().contains(toFind.toUpperCase())) {
-          System.out.println(rowSet);
+//          System.out.println(rowSet);
+          searchResult.add(rowSet);
           rowFoundIn = i++;
           rowsIn.add(rowFoundIn);
           tracker++;
@@ -120,6 +124,6 @@ public class Searcher {
       System.out.println("Search term was found in the following rows:");
       System.out.println(rowsIn);
     }
-    return tracker;
+    return searchResult;
   }
 }
