@@ -7,6 +7,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class SearchHandler implements Route {
@@ -36,6 +37,8 @@ public class SearchHandler implements Route {
             else {
                 try {
                     ArrayList<ArrayList<String>> searchResult = new Searcher();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             }
         }
