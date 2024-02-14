@@ -36,7 +36,7 @@ public class SearchHandler implements Route {
             }
             else {
                 try {
-                    ArrayList<ArrayList<String>> searchResult = new Searcher();
+//                    ArrayList<ArrayList<String>> searchResult = new Searcher.search(data, hasHeaders);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
