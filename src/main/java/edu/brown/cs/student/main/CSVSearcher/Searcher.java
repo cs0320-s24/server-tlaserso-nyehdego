@@ -19,28 +19,8 @@ public class Searcher {
   This is the constructor for searcher.  It takes in a String filename and sets the dataset instance variable as
   the result of parsing.
    */
-  public Searcher(String fileName) throws IOException {
-    try {
-      Reader CSVReader = new FileReader(fileName);
-      CSVParser<ArrayList<String>> parser =
-          new CSVParser<>(CSVReader, new StringArrayListFromRowCreator());
-      try {
-        this.DataSet = parser.parse();
-      } catch (IOException e) {
-        System.err.println(
-            "error occurred while parsing CSV file.  Please see previous error message for more details");
-        throw e;
-      }
-      try {
-        CSVReader.close();
-      } catch (IOException f) {
-        System.err.println("Reader failed to close.");
-        System.exit(1);
-      }
-    } catch (FileNotFoundException e) {
-      System.err.println("Sorry, file not found.");
-      throw new IOException();
-    }
+  public Searcher(ArrayList<ArrayList<String>> data) throws IOException {
+    this.DataSet=data;
   }
   /*
   This is the search method which is the primary search method.  It takes a String toFind, which is the string searched for in the CSV,
@@ -54,6 +34,7 @@ public class Searcher {
   public ArrayList<ArrayList<String>> search(String toFind, Boolean hasHeaders, String columnID, Boolean IDisInt) {
     int tracker = 0;
     int rowFoundIn;
+    ArrayList<ArrayList<String>> result = new ArrayList<>();
     LinkedList<Integer> rowsIn = new LinkedList();
     if (columnID == null) {
       for (int i = 0; i < this.DataSet.size(); i++) {
@@ -61,7 +42,7 @@ public class Searcher {
         for (int j = 0; j < rowSet.size(); j++) {
           if (rowSet.get(j).toUpperCase().contains(toFind.toUpperCase())) {
 //            System.out.println(rowSet);
-            searchResult.add(rowSet);
+            result.add(rowSet);
             rowFoundIn = i++;
             rowsIn.add(rowFoundIn);
             tracker++;
@@ -109,7 +90,7 @@ public class Searcher {
         }
         if (rowSet.get(columnToSearch).toUpperCase().contains(toFind.toUpperCase())) {
 //          System.out.println(rowSet);
-          searchResult.add(rowSet);
+          result.add(rowSet);
           rowFoundIn = i++;
           rowsIn.add(rowFoundIn);
           tracker++;
@@ -124,6 +105,6 @@ public class Searcher {
       System.out.println("Search term was found in the following rows:");
       System.out.println(rowsIn);
     }
-    return searchResult;
+    return result;
   }
 }
