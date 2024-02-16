@@ -18,10 +18,6 @@ public class BroadbandHandler implements Route {
         String county = request.queryParams("county");
         String state = request.queryParams("state");
 
-        Moshi moshi = new Moshi.Builder().build();
-        Type mapStringobject = Types.newParameterizedType(Map.class, String.class, Object.class);
-        JsonAdapter<Map<String, Object>> adapter = moshi.adapter(mapStringobject);
-
         Map<String, Object> responseMap = new HashMap<>();
 
         if (state == null || county == null) {

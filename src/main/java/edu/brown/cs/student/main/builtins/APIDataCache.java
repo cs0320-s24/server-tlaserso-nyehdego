@@ -34,9 +34,9 @@ public class APIDataCache {
                                      *     the respective API to retrieve broadband data.
                                      */
                                     @Override
-                                    public List<List<String>> load(String names) throws DatasourceException {
-                                        return AcsDataSource.pingApi(names);
-                                    }
+//                                    public List<List<String>> load(String names) throws DatasourceException {
+//                                        return AcsDataSource.pingApi(names);
+//                                    }
                                 }
                                 );
     }
@@ -54,4 +54,4 @@ public class APIDataCache {
     }
 }
 
-}
+

@@ -35,12 +35,12 @@ public class APICodeSource {
      * Method that synchronizes the query of the states.
      */
     private synchronized void stateCodesInitializer() {
-        if (sCodes == null) {
+        if (this.sCodes == null) {
             try {
                 this.getStateCodes();
             } catch (DataSourceException e) {
                 // Handle the exception (e.g., log it) or set a default value for stateCodes
-                sCodes = new ArrayList<>();
+                this.sCodes = new ArrayList<>();
             }
         }
     }
@@ -58,7 +58,7 @@ public class APICodeSource {
             // NOTE: important! pattern for handling the input stream
             this.sCodes = adapter.fromJson(new Buffer().readFrom(clientConnection.getInputStream()));
             clientConnection.disconnect();
-            if(sCodes.isEmpty())
+            if(this.sCodes.isEmpty())
                 throw new DataSourceException("Malformed response");
             return this.sCodes;
         } catch(IOException e) {
