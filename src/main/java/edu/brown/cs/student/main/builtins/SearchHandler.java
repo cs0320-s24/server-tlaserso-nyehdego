@@ -22,7 +22,10 @@ public class SearchHandler implements Route {
         QueryParamsMap qm = request.queryMap();
         String query = qm.value("query");
         String index = qm.value("index");
+        String hasHeadersString = qm.value("hasHeaders");
         ArrayList<ArrayList<String>> data = Server.getCSVData();
+        Boolean hasHeaders=false;
+        Boolean idIsInt=false;
 
         if (data == null) {
             return new SearchFailureResponse("error: no data to view");
@@ -32,8 +35,37 @@ public class SearchHandler implements Route {
         if (query == null) {
             return new SearchFailureResponse("error: bad request");
         }
+        if (hasHeadersString==null){
+            return new SearchFailureResponse("error: hasHeaders must be either Y or N");
+        }
+        if (hasHeadersString.equalsIgnoreCase("Y")) {
+            hasHeaders = true;
+        } else if (hasHeadersString.equalsIgnoreCase("N")) {
+            hasHeaders = false;
+        } else {
+            return new SearchFailureResponse("error: hasHeaders must be either Y or N");
+        }
+        if (index!=null) {
+            if (hasHeaders) {
+                try {
+                    parseInt(index);
+                    idIsInt = true;
+                } catch (NumberFormatException e) {
+                    idIsInt = false;
+                }
+            } else {
+                try {
+                    parseInt(index);
+                    idIsInt = true;
+
+                } catch (NumberFormatException e) {
+                    return new SearchFailureResponse("error: index must be a number of there are no headers");
+                }
+            }
+        }
+
         try{
-            ArrayList<ArrayList<String>> searchResult = new Searcher(data).search(query, true,null, false);
+            ArrayList<ArrayList<String>> searchResult = new Searcher(data).search(query, hasHeaders,index, idIsInt);
             Map<String, Object> SearchResponseMap = new HashMap<>();
             SearchResponseMap.put("data", searchResult);
             return new SearchSuccessResponse(SearchResponseMap);

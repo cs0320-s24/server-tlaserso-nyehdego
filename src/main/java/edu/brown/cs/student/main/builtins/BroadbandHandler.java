@@ -10,12 +10,8 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Set;
 
 public class BroadbandHandler implements Route {
-
     private final APICodeSource acsState;
     public BroadbandHandler(APICodeSource acsState) {
 
