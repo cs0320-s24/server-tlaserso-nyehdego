@@ -15,9 +15,11 @@ import java.util.Set;
 
 public class BroadbandHandler implements Route {
 
+    private final ACSDatasource acsState;
     public broadBandHandler(ACSDatasource acsState) {
         this.acsState = acsState;
     }
+
     public Object handle(Request request, Response response){
 
         String state = request.queryParams("state");
