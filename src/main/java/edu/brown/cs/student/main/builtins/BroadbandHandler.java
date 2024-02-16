@@ -39,7 +39,6 @@ public class BroadbandHandler implements Route {
         try {
             List<String> result = acsState.findBandwith(county, state);
             responseMap.put("type", "success");
-
             responseMap.put("Bandwith", result);
             return Adapter.toJson(responseMap);
         } catch (DataSourceException e) {
