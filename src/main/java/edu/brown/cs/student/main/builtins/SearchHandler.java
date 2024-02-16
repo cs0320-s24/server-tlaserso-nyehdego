@@ -37,7 +37,7 @@ public class SearchHandler implements Route {
             Map<String, Object> SearchResponseMap = new HashMap<>();
             SearchResponseMap.put("data", searchResult);
             return new SearchSuccessResponse(SearchResponseMap);
-        }catch (IOException e){
+        } catch (IOException e){
             return new SearchFailureResponse("Error: bad input");
         }
     }

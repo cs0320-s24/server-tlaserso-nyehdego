@@ -1,9 +1,6 @@
 package edu.brown.cs.student.main;
 
-import edu.brown.cs.student.main.builtins.BroadbandHandler;
-import edu.brown.cs.student.main.builtins.SearchHandler;
-import edu.brown.cs.student.main.builtins.ViewHandler;
-import edu.brown.cs.student.main.builtins.loadHandler;
+import edu.brown.cs.student.main.builtins.*;
 import spark.Spark;
 
 
@@ -39,7 +36,7 @@ public class Server {
         Spark.get("load", new loadHandler());
         Spark.get("view", new ViewHandler());
         Spark.get("search", new SearchHandler());
-        Spark.get("broadband", new BroadbandHandler());
+        Spark.get("broadband", new BroadbandHandler(new APICodeSource()));
         Spark.init();
         Spark.awaitInitialization();
 

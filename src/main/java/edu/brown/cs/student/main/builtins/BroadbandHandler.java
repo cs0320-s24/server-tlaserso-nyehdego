@@ -8,6 +8,7 @@ import spark.Response;
 import spark.Route;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,8 +16,9 @@ import java.util.Set;
 
 public class BroadbandHandler implements Route {
 
-    private final ACSDatasource acsState;
-    public broadBandHandler(ACSDatasource acsState) {
+    private final APICodeSource acsState;
+    public BroadbandHandler(APICodeSource acsState) {
+
         this.acsState = acsState;
     }
 
@@ -24,23 +26,32 @@ public class BroadbandHandler implements Route {
 
         String state = request.queryParams("state");
         String county = request.queryParams("county");
-        DateTimeFormatter requestTimeFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        LocalDateTime requestLocalTime = LocalDateTime.now();
 
         Moshi moshi = new Moshi.Builder().build();
         Type mapStringobject = Types.newParameterizedType(Map.class, String.class, Object.class);
         JsonAdapter<Map<String, Object>> Adapter = moshi.adapter(mapStringobject);
-        JsonAdapter<ACSData> ACSDataAdapter = moshi.adapter(ACSData.class);
+
         Map<String, Object> responseMap = new HashMap<>();
 
-        try {
-            ACSLocation acsLocation = new ACSLocation(state, county);
-            ACSData data = acsState.findPercentage(acsLocation);
+        if (state == null || county == null) {
+            responseMap.put("type", "error");
+            responseMap.put("error in type", "missing parameter");
+            responseMap.put("error in args", state == null ? "state" : "county");
+            return Adapter.toJson(responseMap);
         }
 
+        try {
+            List<String> result = acsState.findBandwith(county, state);
+            responseMap.put("type", "success");
 
-
-        return request;
+            responseMap.put("Bandwith", result);
+            return Adapter.toJson(responseMap);
+        } catch (DataSourceException e) {
+            responseMap.put("type", "bad_request");
+            responseMap.put("error_type", "error_datasource");
+            responseMap.put("parameters", e.getMessage());
+            return Adapter.toJson(responseMap);
+        }
     }
 
 }
