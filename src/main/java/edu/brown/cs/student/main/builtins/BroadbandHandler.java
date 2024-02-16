@@ -15,10 +15,10 @@ import java.util.Set;
 
 public class BroadbandHandler implements Route {
 
-    private final ACSDatasource acsState;
-    public broadBandHandler(ACSDatasource acsState) {
-        this.acsState = acsState;
-    }
+//    private final ACSDatasource acsState;
+//    public BroadbandHandler(ACSDatasource acsState) {
+//        this.acsState = acsState;
+//    }
 
     public Object handle(Request request, Response response){
 
@@ -33,10 +33,10 @@ public class BroadbandHandler implements Route {
         JsonAdapter<ACSData> ACSDataAdapter = moshi.adapter(ACSData.class);
         Map<String, Object> responseMap = new HashMap<>();
 
-        try {
-            ACSLocation acsLocation = new ACSLocation(state, county);
-            ACSData data = acsState.findPercentage(acsLocation);
-        }
+//        try {
+//            ACSLocation acsLocation = new ACSLocation(state, county);
+////            ACSData data = state.findPercentage(acsLocation);
+//        }
 
 
 
