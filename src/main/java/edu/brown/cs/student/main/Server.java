@@ -36,7 +36,7 @@ public class Server {
         Spark.get("load", new loadHandler());
         Spark.get("view", new ViewHandler());
         Spark.get("search", new SearchHandler());
-        Spark.get("broadband", new BroadbandHandler(new APICodeSource()));
+        Spark.get("broadband", new BroadbandHandler());
         Spark.init();
         Spark.awaitInitialization();
 
