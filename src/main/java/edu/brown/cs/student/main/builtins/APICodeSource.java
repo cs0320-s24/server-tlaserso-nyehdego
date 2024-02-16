@@ -21,26 +21,25 @@ import java.util.List;
 import java.util.Objects;
 
 public class APICodeSource {
-    public List<List<String>> sCodes;
+    public static List<List<String>> sCodes;
 
     /**
      * The constructor calls the list of states to their codes so that we don't have to re-query it.
      */
     public APICodeSource (){
 
-        this.stateCodesInitializer();
     }
 
     /**
      * Method that synchronizes the query of the states.
      */
-    private synchronized void stateCodesInitializer() {
-        if (this.sCodes == null) {
+    private static synchronized void stateCodesInitializer() {
+        if (APICodeSource.sCodes == null) {
             try {
-                this.getStateCodes();
+                APICodeSource.getStateCodes();
             } catch (DataSourceException e) {
                 // Handle the exception (e.g., log it) or set a default value for stateCodes
-                this.sCodes = new ArrayList<>();
+                APICodeSource.sCodes = new ArrayList<>();
             }
         }
     }
@@ -49,18 +48,18 @@ public class APICodeSource {
      * @return
      * @throws DataSourceException
      */
-    private  List<List<String>> getStateCodes() throws DataSourceException{
+    private static List<List<String>> getStateCodes() throws DataSourceException{
         try {
             URL requestURL = new URL("https", "api.census.gov", "/data/2010/dec/sf1?get=NAME&for=state:*");
             HttpURLConnection clientConnection = connect(requestURL);
             Moshi moshi = new Moshi.Builder().build();
             JsonAdapter<List> adapter = moshi.adapter(List.class).nonNull();
             // NOTE: important! pattern for handling the input stream
-            this.sCodes = adapter.fromJson(new Buffer().readFrom(clientConnection.getInputStream()));
+            APICodeSource.sCodes = adapter.fromJson(new Buffer().readFrom(clientConnection.getInputStream()));
             clientConnection.disconnect();
-            if(this.sCodes.isEmpty())
+            if(APICodeSource.sCodes.isEmpty())
                 throw new DataSourceException("Malformed response");
-            return this.sCodes;
+            return APICodeSource.sCodes;
         } catch(IOException e) {
             throw new DataSourceException(e.getMessage());
         }
@@ -98,14 +97,15 @@ public class APICodeSource {
      * @return
      * @throws DataSourceException
      */
-    public List<String> getBandWidth(String county, String state) throws DataSourceException {
+    public static List<String> getBandWidth(String county, String state) throws DataSourceException {
+        APICodeSource.stateCodesInitializer();
         try {
-            String stateCode = this.convertNameToStateCode(state);
-            String countyCode = this.countyCode(this.subsetData(stateCode), county);
+            String stateCode = APICodeSource.convertNameToStateCode(state);
+            String countyCode = APICodeSource.countyCode(APICodeSource.subsetData(stateCode), county);
             LocalDate date = LocalDate.now();
             LocalTime time = LocalTime.now();
             URL requestURL = new URL("https", "api.census.gov", "/data/2021/acs/acs1/subject/variables?get=NAME,S2802_C03_022E&for=county:"+countyCode+"&in=state:"+stateCode);
-            List<List<String>> data = this.getDataFromURL(requestURL);
+            List<List<String>> data = APICodeSource.getDataFromURL(requestURL);
 
 
             Moshi moshi = new Moshi.Builder().build();
@@ -132,7 +132,7 @@ public class APICodeSource {
      * @throws DataSourceException
      * @throws IOException
      */
-    public List<List<String>> getDataFromURL(URL requestURL) throws DataSourceException, IOException {
+    public static List<List<String>> getDataFromURL(URL requestURL) throws DataSourceException, IOException {
         List<List<String>> data = new ArrayList<>();
         try {
             // Make an HTTP GET request to the URL
@@ -164,11 +164,11 @@ public class APICodeSource {
      * @return
      * @throws DataSourceException
      */
-    public String convertNameToStateCode(String stateName) throws DataSourceException {
+    public static String convertNameToStateCode(String stateName) throws DataSourceException {
         String stateCode = "*";
-        for (int i = 0; i < this.sCodes.size(); i++) {
-            if (this.sCodes.get(i).get(0).equalsIgnoreCase(stateName)) {
-                stateCode = this.sCodes.get(i).get(1);
+        for (int i = 0; i < APICodeSource.sCodes.size(); i++) {
+            if (APICodeSource.sCodes.get(i).get(0).equalsIgnoreCase(stateName)) {
+                stateCode = APICodeSource.sCodes.get(i).get(1);
                 break;
             }
         }
@@ -186,7 +186,7 @@ public class APICodeSource {
      * @return
      * @throws DataSourceException
      */
-    public List<List<String>> subsetData(String stateCode)throws DataSourceException{
+    public static List<List<String>> subsetData(String stateCode)throws DataSourceException{
         try {
             URL requestURL = new URL("https", "api.census.gov", "/data/2021/acs/acs1/subject/variables?get=NAME,S2802_C03_022E&for=county:*&in=state:"+stateCode);
             HttpURLConnection clientConnection = connect(requestURL);
@@ -208,7 +208,7 @@ public class APICodeSource {
      * @param countyName
      * @return
      */
-    public String countyCode(List<List<String>> counties, String countyName) throws DataSourceException {
+    public static String countyCode(List<List<String>> counties, String countyName) throws DataSourceException {
         String stateCode = "*";
         for (int i = 0; i < counties.size(); i++) {
             String name = counties.get(i).get(0);

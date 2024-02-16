@@ -3,6 +3,7 @@ package edu.brown.cs.student.main.builtins;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
+import edu.brown.cs.student.main.Server;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -10,10 +11,16 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class BroadbandHandler implements Route {
+    private APIDataCache cache;
+
+    public BroadbandHandler(){
+        this.cache = new APIDataCache(10, 10);
+    }
     public Object handle(Request request, Response response){
-        APICodeSource acsState = new APICodeSource();
+
 
         String county = request.queryParams("county");
         String state = request.queryParams("state");
@@ -26,11 +33,13 @@ public class BroadbandHandler implements Route {
             return new BroadbandFailureResponse(responseMap);
         }
 
+        String statecounty = county + "." + state;
+
         try {
-            List<String> result = acsState.getBandWidth(county, state);
-            responseMap.put("Bandwith", result);
+            List<String> result = this.cache.get(statecounty);
+            responseMap.put("Bandwidth", result);
             return new BroadbandSuccessResponse(responseMap);
-        } catch (DataSourceException e) {
+        } catch (ExecutionException e) {
             responseMap.put("error_type", "error_datasource");
             responseMap.put("parameters", e.getMessage());
             return new BroadbandFailureResponse(responseMap);
