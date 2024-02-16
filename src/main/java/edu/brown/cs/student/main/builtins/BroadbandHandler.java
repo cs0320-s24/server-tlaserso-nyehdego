@@ -20,12 +20,12 @@ public class BroadbandHandler implements Route {
 
     public Object handle(Request request, Response response){
 
-        String state = request.queryParams("state");
         String county = request.queryParams("county");
+        String state = request.queryParams("state");
 
         Moshi moshi = new Moshi.Builder().build();
         Type mapStringobject = Types.newParameterizedType(Map.class, String.class, Object.class);
-        JsonAdapter<Map<String, Object>> Adapter = moshi.adapter(mapStringobject);
+        JsonAdapter<Map<String, Object>> adapter = moshi.adapter(mapStringobject);
 
         Map<String, Object> responseMap = new HashMap<>();
 
@@ -33,19 +33,19 @@ public class BroadbandHandler implements Route {
             responseMap.put("type", "error");
             responseMap.put("error in type", "missing parameter");
             responseMap.put("error in args", state == null ? "state" : "county");
-            return Adapter.toJson(responseMap);
+            return adapter.toJson(responseMap);
         }
 
         try {
-            List<String> result = acsState.findBandwith(county, state);
+            List<String> result = acsState.getBandWidth(county, state);
             responseMap.put("type", "success");
             responseMap.put("Bandwith", result);
-            return Adapter.toJson(responseMap);
+            return adapter.toJson(responseMap);
         } catch (DataSourceException e) {
             responseMap.put("type", "bad_request");
             responseMap.put("error_type", "error_datasource");
             responseMap.put("parameters", e.getMessage());
-            return Adapter.toJson(responseMap);
+            return adapter.toJson(responseMap);
         }
     }
 
