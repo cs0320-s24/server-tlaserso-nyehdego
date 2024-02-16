@@ -12,8 +12,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * view handler class handles all methods having to do with outputting  the csv for viewing
+ */
 public class ViewHandler implements Route {
 
+    /**
+     * handle gets the data and puts it into a repsosneMap that is returned to the Server
+     * @param request
+     * @param response
+     * @return
+     */
     public Object handle(Request request, Response response){
         ArrayList<ArrayList<String>> data = Server.getCSVData();
         if (data == null) {
@@ -25,6 +34,11 @@ public class ViewHandler implements Route {
         return new ViewSuccessResponse(viewResponseMap);
     }
 
+    /**
+     * successful view repsonse object for handle method
+     * @param response_type
+     * @param responseMap
+     */
 
     public record ViewSuccessResponse(String response_type, Map<String, Object> responseMap) {
         public ViewSuccessResponse(Map<String, Object> responseMap) {
@@ -49,7 +63,7 @@ public class ViewHandler implements Route {
         }
     }
 
-    /** Response object to send if someone requested soup from an empty Menu */
+    /** unsuccessful view repsonse object for handle method */
     public record ViewFailureResponse(String response_type) {
         public ViewFailureResponse() {
             this("error");

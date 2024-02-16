@@ -13,12 +13,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Broadber handler si a class that manages all commands within the broadband query
+ */
 public class BroadbandHandler implements Route {
     private APIDataCache cache;
 
+    /**
+     * constructor builds a cache object to use for the data found from broadband
+     */
     public BroadbandHandler(){
         this.cache = new APIDataCache(10, 10);
     }
+
+    /**
+     * handle method takes a request for a given state and county and stores it into cache if not already there
+     * @param request
+     * @param response
+     * @return
+     */
     public Object handle(Request request, Response response){
 
 
@@ -45,6 +58,12 @@ public class BroadbandHandler implements Route {
             return new BroadbandFailureResponse(responseMap);
         }
     }
+
+    /**
+     * a response handler for when Brodband suceeds
+     * @param response_type
+     * @param responseMap
+     */
     public record BroadbandSuccessResponse(String response_type, Map<String, Object> responseMap) {
         public BroadbandSuccessResponse(Map<String, Object> responseMap) {
             this("success", responseMap);
@@ -68,7 +87,8 @@ public class BroadbandHandler implements Route {
         }
     }
 
-    /** Response object to send if someone requested soup from an empty Menu */
+    /** Response object to send if someones request failed, with a message
+     * */
     public record BroadbandFailureResponse(String response_type, Map<String, Object> responseMap) {
         public BroadbandFailureResponse(Map<String, Object> responseMap) {
             this("error", responseMap);

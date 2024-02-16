@@ -9,6 +9,9 @@ import java.util.ArrayList;
 
 import static spark.Spark.after;
 
+/**
+ * class responsible for launching the server and routing based on the desired query class
+ */
 public class Server {
 
     private static ArrayList<ArrayList<String>> data;
@@ -22,6 +25,10 @@ public class Server {
         Server.data = csvData;
     }
 
+    /**
+     * main sets up the server on a port and looks for keywords of the handlers
+     * @param args
+     */
     public static void main(String[] args) {
         int port = 3232;
         Spark.port(port);

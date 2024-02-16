@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * APIDataCache is the class that holdes the cache object for our broadband methodology
+ */
+
 public class APIDataCache {
     private LoadingCache<String, List<String>> cache;
 
@@ -29,7 +33,7 @@ public class APIDataCache {
                                 new CacheLoader<>() {
                                     /**
                                      * @param statecounty - the state and county name, concatenated together seperated by a
-                                     *     '.' Ex: California.Los Angeles.
+                                     *     '.' Ex: California.OrangeCounty.
                                      * @return - A list of Strings. This is gotten by making a get request to
                                      *     the respective API to retrieve broadband data.
                                      */

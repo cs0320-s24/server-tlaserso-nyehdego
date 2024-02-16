@@ -20,6 +20,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This class is responsbile for querying into API or cache database to find the correct response based on user input
+ */
+
 public class APICodeSource {
     public static List<List<String>> sCodes;
 

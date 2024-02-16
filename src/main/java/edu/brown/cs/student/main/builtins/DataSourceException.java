@@ -1,5 +1,8 @@
 package edu.brown.cs.student.main.builtins;
 
+/**
+ * class for a custom exception class
+ */
 public class DataSourceException extends Throwable {
     private final Throwable cause;
     public DataSourceException(String message) {

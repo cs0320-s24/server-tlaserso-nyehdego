@@ -16,6 +16,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * handler that deals with reading in CSV from user input
+ */
+
 public class loadHandler implements Route {
 
     public Object handle(Request request, Response response){
@@ -50,6 +54,11 @@ public class loadHandler implements Route {
 
     }
 
+    /**
+     * repsosne object is sent when someones csv was succesfully loaded in
+     * @param response_type
+     * @param responseMap
+     */
 
     public record LoadSuccessResponse(String response_type, Map<String, Object> responseMap) {
         public LoadSuccessResponse(Map<String, Object> responseMap) {
@@ -74,7 +83,7 @@ public class loadHandler implements Route {
         }
     }
 
-    /** Response object to send if someone requested soup from an empty Menu */
+    /** Response object to send if someone tried to load in a bad csv */
     public record LoadFailureResponse(String response_type) {
         public LoadFailureResponse() {
             this("error");
