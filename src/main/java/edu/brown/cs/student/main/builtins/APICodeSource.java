@@ -167,8 +167,9 @@ public class APICodeSource {
     public String convertNameToStateCode(String stateName) throws DataSourceException {
         String stateCode = "*";
         for (int i = 0; i < this.sCodes.size(); i++) {
-            if (this.sCodes.get(i).get(0).equals(stateName)) {
+            if (this.sCodes.get(i).get(0).equalsIgnoreCase(stateName)) {
                 stateCode = this.sCodes.get(i).get(1);
+                break;
             }
         }
         if (!Objects.equals(stateCode, "*")) {
@@ -212,7 +213,7 @@ public class APICodeSource {
         for (int i = 0; i < counties.size(); i++) {
             String name = counties.get(i).get(0);
             List<String> parts = Arrays.asList(name.split(","));
-            if (parts.get(0).equals(countyName)) {
+            if (parts.get(0).equalsIgnoreCase(countyName)) {
                 stateCode = counties.get(i).get(3);
             }
         }
