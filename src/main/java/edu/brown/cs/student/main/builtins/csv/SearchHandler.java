@@ -18,6 +18,12 @@ import static java.lang.Integer.parseInt;
 
 public class SearchHandler implements Route {
 
+    /**
+     * This handles the searching builtin.  It first parses through the input parameters before running search.
+     * @param request
+     * @param response
+     * @return
+     */
     public Object handle(Request request, Response response){
         QueryParamsMap qm = request.queryMap();
         String query = qm.value("query");

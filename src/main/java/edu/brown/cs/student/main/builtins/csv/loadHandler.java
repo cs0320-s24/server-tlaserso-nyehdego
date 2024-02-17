@@ -22,6 +22,9 @@ import java.util.Set;
 
 public class loadHandler implements Route {
 
+    /**
+    This is the handler class.  It sets the data variable (replacing it if it is already set)
+     **/
     public Object handle(Request request, Response response){
         Set<String> params = request.queryParams();
         System.out.println(params);
