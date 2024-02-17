@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.builtins;
+package edu.brown.cs.student.main.builtins.broadband;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -31,7 +31,10 @@ public class APICodeSource {
      * The constructor calls the list of states to their codes so that we don't have to re-query it.
      */
     public APICodeSource (){
-
+    APICodeSource.stateCodesInitializer();
+    }
+    public List<List<String>> getCodes(){
+        return APICodeSource.sCodes;
     }
 
     /**

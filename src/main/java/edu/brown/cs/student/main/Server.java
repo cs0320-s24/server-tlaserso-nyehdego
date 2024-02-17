@@ -1,10 +1,12 @@
 package edu.brown.cs.student.main;
 
-import edu.brown.cs.student.main.builtins.*;
+import edu.brown.cs.student.main.builtins.broadband.BroadbandHandler;
+import edu.brown.cs.student.main.builtins.csv.SearchHandler;
+import edu.brown.cs.student.main.builtins.csv.ViewHandler;
+import edu.brown.cs.student.main.builtins.csv.loadHandler;
 import spark.Spark;
 
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static spark.Spark.after;

@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.builtins;
+package edu.brown.cs.student.main.builtins.csv;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
@@ -27,6 +27,7 @@ public class loadHandler implements Route {
         System.out.println(params);
         String path = "data/";
         path += request.queryParams("path");
+
 
         // should we error check that the path is null?
         Map<String, Object> responseMap = new HashMap<>();

@@ -1,8 +1,7 @@
-package edu.brown.cs.student.main.builtins;
+package edu.brown.cs.student.main.builtins.csv;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
-import edu.brown.cs.student.main.CSVSearcher.Searcher;
 import edu.brown.cs.student.main.Server;
 import spark.Request;
 import spark.Response;

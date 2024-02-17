@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.builtins;
+package edu.brown.cs.student.main.builtins.broadband;
 
 /**
  * class for a custom exception class
