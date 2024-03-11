@@ -31,6 +31,7 @@ public class Server {
      * main sets up the server on a port and looks for keywords of the handlers
      * @param args
      */
+
     public static void main(String[] args) {
         int port = 3232;
         Spark.port(port);

@@ -30,7 +30,7 @@ public class ViewHandler implements Route {
         }
         Map<String, Object> viewResponseMap = new HashMap<>();
         viewResponseMap.put("data", data);
-        return new ViewSuccessResponse(viewResponseMap);
+        return new ViewSuccessResponse(viewResponseMap).serialize();
     }
 
     /**
