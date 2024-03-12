@@ -61,30 +61,31 @@ public class ParserTest {
   This test functions to make sure that the parser works with a different creator from row, and that it correctly throws an
   exception if a file with headers is used, as the headers are incompatible with being converted into the object.
    */
-//  @Test
-//  public void AlternateConstructorParseTest() {
-//    try {
-//      Reader CSVReader =
-//          new FileReader(
-//              "C:\\Users\\Tommy\\Documents\\Cs320\\csv-tlasersohn\\data\\census\\income_by_race.csv");
-//      CSVParser<IncomeFromRaceClass> parser =
-//          new CSVParser<>(CSVReader, new IncomeClassCreatorfromRow());
-//      try {
-//        ArrayList<IncomeFromRaceClass> DataSet = parser.parse();
-//        Assertions.assertThrows(
-//            IOException.class,
-//            () -> {
-//              parser.parse();
-//            });
-//        Assertions.assertEquals(DataSet.get(1).income, "85413");
-//        Assertions.assertEquals(DataSet.get(21).race, "asian");
-//      } catch (IOException e) {
-//        System.out.println("Parser failed");
-//      }
-//    } catch (FileNotFoundException e) {
-//      System.out.println("lol you deleted the data folder");
-//    }
-//  }
+  //  @Test
+  //  public void AlternateConstructorParseTest() {
+  //    try {
+  //      Reader CSVReader =
+  //          new FileReader(
+  //
+  // "C:\\Users\\Tommy\\Documents\\Cs320\\csv-tlasersohn\\data\\census\\income_by_race.csv");
+  //      CSVParser<IncomeFromRaceClass> parser =
+  //          new CSVParser<>(CSVReader, new IncomeClassCreatorfromRow());
+  //      try {
+  //        ArrayList<IncomeFromRaceClass> DataSet = parser.parse();
+  //        Assertions.assertThrows(
+  //            IOException.class,
+  //            () -> {
+  //              parser.parse();
+  //            });
+  //        Assertions.assertEquals(DataSet.get(1).income, "85413");
+  //        Assertions.assertEquals(DataSet.get(21).race, "asian");
+  //      } catch (IOException e) {
+  //        System.out.println("Parser failed");
+  //      }
+  //    } catch (FileNotFoundException e) {
+  //      System.out.println("lol you deleted the data folder");
+  //    }
+  //  }
   /*
   This test makes sure that the parser works with other types of readers, in this case a string reader.
    */

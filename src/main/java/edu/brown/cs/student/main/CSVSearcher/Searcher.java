@@ -2,11 +2,7 @@ package edu.brown.cs.student.main.CSVSearcher;
 
 import static java.lang.Integer.parseInt;
 
-import edu.brown.cs.student.main.CSVParser.CSVParser;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -20,7 +16,7 @@ public class Searcher {
   the result of parsing.
    */
   public Searcher(ArrayList<ArrayList<String>> data) throws IOException {
-    this.DataSet=data;
+    this.DataSet = data;
   }
   /*
   This is the search method which is the primary search method.  It takes a String toFind, which is the string searched for in the CSV,
@@ -31,7 +27,8 @@ public class Searcher {
   the first row is searched to determine which column index has that header, and then the entries in that column are searched
   through.  This method prints the rows found in, a summary, and returns as an int the number of times the term was found.
    */
-  public ArrayList<ArrayList<String>> search(String toFind, Boolean hasHeaders, String columnID, Boolean IDisInt) {
+  public ArrayList<ArrayList<String>> search(
+      String toFind, Boolean hasHeaders, String columnID, Boolean IDisInt) {
     int tracker = 0;
     int rowFoundIn;
     ArrayList<ArrayList<String>> result = new ArrayList<>();
@@ -41,7 +38,7 @@ public class Searcher {
         ArrayList<String> rowSet = this.DataSet.get(i);
         for (int j = 0; j < rowSet.size(); j++) {
           if (rowSet.get(j).toUpperCase().contains(toFind.toUpperCase())) {
-//            System.out.println(rowSet);
+            //            System.out.println(rowSet);
             result.add(rowSet);
             rowFoundIn = i++;
             rowsIn.add(rowFoundIn);
@@ -89,7 +86,7 @@ public class Searcher {
           break;
         }
         if (rowSet.get(columnToSearch).toUpperCase().contains(toFind.toUpperCase())) {
-//          System.out.println(rowSet);
+          //          System.out.println(rowSet);
           result.add(rowSet);
           rowFoundIn = i++;
           rowsIn.add(rowFoundIn);
